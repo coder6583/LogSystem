@@ -81,7 +81,7 @@ fs.watchFile(logFilePath, (curr, prev) => {
                 timestamp: curr.mtimeMs
             };
             logJson.push(logInstance);
-            fs.writeFile(logJsonFilePath, JSON.stringify(logInstance), (err) => {
+            fs.writeFile(logJsonFilePath, JSON.stringify(logJson), (err) => {
                 if(err) console.log(err);
             });
             logFileSize = data.toString().length;

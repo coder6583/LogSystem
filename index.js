@@ -68,7 +68,7 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
                 timestamp: curr.mtimeMs
             };
             logJson.push(logInstance);
-            fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logInstance), function (err) {
+            fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
                 if (err)
                     console.log(err);
             });
