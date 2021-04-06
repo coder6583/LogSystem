@@ -20,7 +20,7 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
         console.log(err);
     else {
         var jsonData = JSON.parse(data.toString());
-        if (jsonData.isArray()) {
+        if (Array.isArray(jsonData)) {
             logJson.concat(jsonData);
         }
         else if (typeof jsonData === 'object' && jsonData != null) {

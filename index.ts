@@ -26,7 +26,7 @@ fs.readFile(logJsonFilePath, (err, data) => {
     else
     {
         let jsonData = JSON.parse(data.toString());
-        if(jsonData.isArray())
+        if(Array.isArray(jsonData))
         {
             logJson.concat(jsonData);
         }
