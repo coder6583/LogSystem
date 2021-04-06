@@ -11,7 +11,7 @@ var logFilePath = path_1.default.resolve(discordDir, 'log');
 var adminlogFilePath = path_1.default.resolve(discordDir, 'adminlog');
 fs_1.default.watchFile(logFilePath, function (curr, prev) {
     var time = new Date(Math.floor(curr.atimeMs));
-    console.log(time.getMinutes());
+    console.log(curr.atimeMs, time.getMinutes());
 });
 fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
     console.log(curr.atimeMs);
