@@ -11,11 +11,11 @@ interface logObject
 }
 
 const discordDir = '/home/pi/CompilerDiscord';
-const adminDir = '/home/pi/AdminCompilerServer';
+const homeDir = '/home/pi';
 const logFilePath = path.resolve(discordDir, 'log');
 const adminlogFilePath = path.resolve(discordDir, 'adminlog');
-const logJsonFilePath = path.resolve(adminDir, 'log.json');
-const adminlogJsonFilePath = path.resolve(adminDir, 'adminlog.json');
+const logJsonFilePath = path.resolve(homeDir, 'log.json');
+const adminlogJsonFilePath = path.resolve(homeDir, 'adminlog.json');
 
 let logFileSize = 0;
 let adminlogFileSize = 0;
