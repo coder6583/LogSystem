@@ -27,6 +27,7 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
         else if (typeof jsonData === 'object' && jsonData != null) {
             console.log('object');
             logJson.push(jsonData);
+            console.log(logJson);
         }
     }
 });

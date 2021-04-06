@@ -35,6 +35,7 @@ fs.readFile(logJsonFilePath, (err, data) => {
         {
             console.log('object');
             logJson.push(jsonData);
+            console.log(logJson);
         }
     }
 })
