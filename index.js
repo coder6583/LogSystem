@@ -10,7 +10,8 @@ var discordDir = '/home/pi/CompilerDiscord';
 var logFilePath = path_1.default.resolve(discordDir, 'log');
 var adminlogFilePath = path_1.default.resolve(discordDir, 'adminlog');
 fs_1.default.watchFile(logFilePath, function (curr, prev) {
-    console.log(curr.atimeMs);
+    var time = new Date(curr.atimeMs);
+    console.log(time.getDate);
 });
 fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
     console.log(curr.atimeMs);
