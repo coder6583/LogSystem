@@ -28,10 +28,12 @@ fs.readFile(logJsonFilePath, (err, data) => {
         let jsonData = JSON.parse(data.toString());
         if(Array.isArray(jsonData))
         {
+            console.log('array');
             logJson.concat(jsonData);
         }
         else if(typeof jsonData === 'object' && jsonData != null)
         {
+            console.log('object');
             logJson.push(jsonData);
         }
     }
@@ -81,6 +83,7 @@ fs.watchFile(logFilePath, (curr, prev) => {
             fs.writeFile(logJsonFilePath, JSON.stringify(logInstance), (err) => {
                 if(err) console.log(err);
             });
+            logFileSize = data.toString().length;
         }
     })
 });

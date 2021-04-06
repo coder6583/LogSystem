@@ -21,9 +21,11 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
     else {
         var jsonData = JSON.parse(data.toString());
         if (Array.isArray(jsonData)) {
+            console.log('array');
             logJson.concat(jsonData);
         }
         else if (typeof jsonData === 'object' && jsonData != null) {
+            console.log('object');
             logJson.push(jsonData);
         }
     }
@@ -69,6 +71,7 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
                 if (err)
                     console.log(err);
             });
+            logFileSize = data.toString().length;
         }
     });
 });
