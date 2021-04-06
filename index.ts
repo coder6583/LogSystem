@@ -9,7 +9,7 @@ const adminlogFilePath = path.resolve(discordDir, 'adminlog');
 
 fs.watchFile(logFilePath, (curr, prev) => {
     let time = new Date(Math.floor(curr.atimeMs));
-    console.log(time.getDate());
+    console.log(time.getMinutes());
 });
 
 fs.watchFile(adminlogFilePath, (curr, prev) => {
