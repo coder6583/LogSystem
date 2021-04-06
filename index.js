@@ -21,13 +21,10 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
     else {
         var jsonData = JSON.parse(data.toString());
         if (Array.isArray(jsonData)) {
-            console.log('array');
             logJson.concat(jsonData);
         }
         else if (typeof jsonData === 'object' && jsonData != null) {
-            console.log('object');
             logJson.push(jsonData);
-            console.log(logJson);
         }
     }
 });
@@ -36,7 +33,13 @@ fs_1.default.readFile(adminlogJsonFilePath, function (err, data) {
     if (err)
         console.log(err);
     else {
-        adminlogJson = JSON.parse(data.toString());
+        var jsonData = JSON.parse(data.toString());
+        if (Array.isArray(jsonData)) {
+            adminlogJson.concat(jsonData);
+        }
+        else if (typeof jsonData === 'object' && jsonData != null) {
+            adminlogJson.push(jsonData);
+        }
     }
 });
 fs_1.default.readFile(logFilePath, function (err, data) {
@@ -58,12 +61,9 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
         if (err)
             console.log(err);
         else {
-            var time = new Date(Math.floor(curr.mtimeMs));
             var fileChange = data.toString().slice(logFileSize);
-            console.log(fileChange);
-            console.log(curr.mtimeMs, time.getMinutes());
             var logInstance = {
-                category: 'Info',
+                category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
             };
@@ -77,5 +77,22 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
     });
 });
 fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
-    console.log(curr.atimeMs);
+    fs_1.default.readFile(adminlogFilePath, function (err, data) {
+        if (err)
+            console.log(err);
+        else {
+            var fileChange = data.toString().slice(adminlogFileSize);
+            var logInstance = {
+                category: 'info',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            adminlogJson.push(logInstance);
+            fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
+                if (err)
+                    console.log(err);
+            });
+            adminlogFileSize = data.toString().length;
+        }
+    });
 });

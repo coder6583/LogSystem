@@ -28,14 +28,11 @@ fs.readFile(logJsonFilePath, (err, data) => {
         let jsonData = JSON.parse(data.toString());
         if(Array.isArray(jsonData))
         {
-            console.log('array');
             logJson.concat(jsonData);
         }
         else if(typeof jsonData === 'object' && jsonData != null)
         {
-            console.log('object');
             logJson.push(jsonData);
-            console.log(logJson);
         }
     }
 })
@@ -45,7 +42,15 @@ fs.readFile(adminlogJsonFilePath, (err, data) => {
     if(err) console.log(err);
     else
     {
-        adminlogJson = JSON.parse(data.toString());
+        let jsonData = JSON.parse(data.toString());
+        if(Array.isArray(jsonData))
+        {
+            adminlogJson.concat(jsonData);
+        }
+        else if(typeof jsonData === 'object' && jsonData != null)
+        {
+            adminlogJson.push(jsonData);
+        }
     }
 })
 
@@ -70,13 +75,10 @@ fs.watchFile(logFilePath, (curr, prev) => {
         if(err) console.log(err);
         else
         {
-            let time = new Date(Math.floor(curr.mtimeMs));
             let fileChange = data.toString().slice(logFileSize);
-            console.log(fileChange);
-            console.log(curr.mtimeMs, time.getMinutes());
             const logInstance: logObject = 
             {
-                category: 'Info',
+                category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
             };
@@ -90,5 +92,22 @@ fs.watchFile(logFilePath, (curr, prev) => {
 });
 
 fs.watchFile(adminlogFilePath, (curr, prev) => {
-    console.log(curr.atimeMs);
+    fs.readFile(adminlogFilePath, (err, data) => {
+        if(err) console.log(err);
+        else
+        {
+            let fileChange = data.toString().slice(adminlogFileSize);
+            const logInstance: logObject = 
+            {
+                category: 'info',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            adminlogJson.push(logInstance);
+            fs.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), (err) => {
+                if(err) console.log(err);
+            });
+            adminlogFileSize = data.toString().length;
+        }
+    })
 });
