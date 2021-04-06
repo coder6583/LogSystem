@@ -14,7 +14,7 @@ var logJsonFilePath = path_1.default.resolve(adminDir, 'log.json');
 var adminlogJsonFilePath = path_1.default.resolve(adminDir, 'adminlog.json');
 var logFileSize = 0;
 var adminlogFileSize = 0;
-var logJson;
+var logJson = [];
 fs_1.default.readFile(logJsonFilePath, function (err, data) {
     if (err)
         console.log(err);
@@ -28,7 +28,7 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
         }
     }
 });
-var adminlogJson;
+var adminlogJson = [];
 fs_1.default.readFile(adminlogJsonFilePath, function (err, data) {
     if (err)
         console.log(err);

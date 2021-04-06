@@ -20,7 +20,7 @@ const adminlogJsonFilePath = path.resolve(adminDir, 'adminlog.json');
 let logFileSize = 0;
 let adminlogFileSize = 0;
 
-let logJson: logObject[];
+var logJson: logObject[] = [];
 fs.readFile(logJsonFilePath, (err, data) => {
     if(err) console.log(err);
     else
@@ -37,7 +37,7 @@ fs.readFile(logJsonFilePath, (err, data) => {
     }
 })
 
-let adminlogJson: logObject[];
+var adminlogJson: logObject[] = [];
 fs.readFile(adminlogJsonFilePath, (err, data) => {
     if(err) console.log(err);
     else
