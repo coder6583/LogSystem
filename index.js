@@ -9,11 +9,15 @@ var path_1 = __importDefault(require("path"));
 var discordDir = '/home/pi/CompilerDiscord';
 var homeDir = '/home/pi';
 var logFilePath = path_1.default.resolve(discordDir, 'log');
+var errorlogFilePath = path_1.default.resolve(discordDir, 'errorlog');
 var adminlogFilePath = path_1.default.resolve(discordDir, 'adminlog');
+var erroradminlogFilePath = path_1.default.resolve(discordDir, 'erroradminlog');
 var logJsonFilePath = path_1.default.resolve(homeDir, 'log.json');
 var adminlogJsonFilePath = path_1.default.resolve(homeDir, 'adminlog.json');
 var logFileSize = 0;
+var errorlogFileSize = 0;
 var adminlogFileSize = 0;
+var erroradminlogFileSize = 0;
 var logJson = [];
 fs_1.default.readFile(logJsonFilePath, function (err, data) {
     if (err)
@@ -49,11 +53,25 @@ fs_1.default.readFile(logFilePath, function (err, data) {
         logFileSize = data.toString().length;
     }
 });
+fs_1.default.readFile(errorlogFilePath, function (err, data) {
+    if (err)
+        console.log(err);
+    else {
+        errorlogFileSize = data.toString().length;
+    }
+});
 fs_1.default.readFile(adminlogFilePath, function (err, data) {
     if (err)
         console.log(err);
     else {
         adminlogFileSize = data.toString().length;
+    }
+});
+fs_1.default.readFile(erroradminlogFilePath, function (err, data) {
+    if (err)
+        console.log(err);
+    else {
+        erroradminlogFileSize = data.toString().length;
     }
 });
 fs_1.default.watchFile(logFilePath, function (curr, prev) {
@@ -76,6 +94,26 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
         }
     });
 });
+fs_1.default.watchFile(errorlogFilePath, function (curr, prev) {
+    fs_1.default.readFile(errorlogFilePath, function (err, data) {
+        if (err)
+            console.log(err);
+        else {
+            var fileChange = data.toString().slice(errorlogFileSize);
+            var logInstance = {
+                category: 'error',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            logJson.push(logInstance);
+            fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
+                if (err)
+                    console.log(err);
+            });
+            errorlogFileSize = data.toString().length;
+        }
+    });
+});
 fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
     fs_1.default.readFile(adminlogFilePath, function (err, data) {
         if (err)
@@ -93,6 +131,26 @@ fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
                     console.log(err);
             });
             adminlogFileSize = data.toString().length;
+        }
+    });
+});
+fs_1.default.watchFile(erroradminlogFilePath, function (curr, prev) {
+    fs_1.default.readFile(erroradminlogFilePath, function (err, data) {
+        if (err)
+            console.log(err);
+        else {
+            var fileChange = data.toString().slice(erroradminlogFileSize);
+            var logInstance = {
+                category: 'error',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            adminlogJson.push(logInstance);
+            fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
+                if (err)
+                    console.log(err);
+            });
+            erroradminlogFileSize = data.toString().length;
         }
     });
 });

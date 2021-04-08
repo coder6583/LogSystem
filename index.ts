@@ -13,12 +13,16 @@ interface logObject
 const discordDir = '/home/pi/CompilerDiscord';
 const homeDir = '/home/pi';
 const logFilePath = path.resolve(discordDir, 'log');
+const errorlogFilePath = path.resolve(discordDir, 'errorlog');
 const adminlogFilePath = path.resolve(discordDir, 'adminlog');
+const erroradminlogFilePath = path.resolve(discordDir, 'erroradminlog');
 const logJsonFilePath = path.resolve(homeDir, 'log.json');
 const adminlogJsonFilePath = path.resolve(homeDir, 'adminlog.json');
 
 let logFileSize = 0;
+let errorlogFileSize = 0;
 let adminlogFileSize = 0;
+let erroradminlogFileSize = 0;
 
 var logJson: logObject[] = [];
 fs.readFile(logJsonFilePath, (err, data) => {
@@ -61,6 +65,13 @@ fs.readFile(logFilePath, (err, data) => {
         logFileSize = data.toString().length;
     }
 });
+fs.readFile(errorlogFilePath, (err, data) => {
+    if(err) console.log(err);
+    else
+    {
+        errorlogFileSize = data.toString().length;
+    }
+});
 
 fs.readFile(adminlogFilePath, (err, data) => {
     if(err) console.log(err);
@@ -69,7 +80,13 @@ fs.readFile(adminlogFilePath, (err, data) => {
         adminlogFileSize = data.toString().length;
     }
 });
-
+fs.readFile(erroradminlogFilePath, (err, data) => {
+    if(err) console.log(err);
+    else
+    {
+        erroradminlogFileSize = data.toString().length;
+    }
+});
 fs.watchFile(logFilePath, (curr, prev) => {
     fs.readFile(logFilePath, (err, data) => {
         if(err) console.log(err);
@@ -91,6 +108,27 @@ fs.watchFile(logFilePath, (curr, prev) => {
     })
 });
 
+fs.watchFile(errorlogFilePath, (curr, prev) => {
+    fs.readFile(errorlogFilePath, (err, data) => {
+        if(err) console.log(err);
+        else
+        {
+            let fileChange = data.toString().slice(errorlogFileSize);
+            const logInstance: logObject = 
+            {
+                category: 'error',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            logJson.push(logInstance);
+            fs.writeFile(logJsonFilePath, JSON.stringify(logJson), (err) => {
+                if(err) console.log(err);
+            });
+            errorlogFileSize = data.toString().length;
+        }
+    })
+});
+
 fs.watchFile(adminlogFilePath, (curr, prev) => {
     fs.readFile(adminlogFilePath, (err, data) => {
         if(err) console.log(err);
@@ -108,6 +146,27 @@ fs.watchFile(adminlogFilePath, (curr, prev) => {
                 if(err) console.log(err);
             });
             adminlogFileSize = data.toString().length;
+        }
+    })
+});
+
+fs.watchFile(erroradminlogFilePath, (curr, prev) => {
+    fs.readFile(erroradminlogFilePath, (err, data) => {
+        if(err) console.log(err);
+        else
+        {
+            let fileChange = data.toString().slice(erroradminlogFileSize);
+            const logInstance: logObject = 
+            {
+                category: 'error',
+                value: fileChange,
+                timestamp: curr.mtimeMs
+            };
+            adminlogJson.push(logInstance);
+            fs.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), (err) => {
+                if(err) console.log(err);
+            });
+            erroradminlogFileSize = data.toString().length;
         }
     })
 });
