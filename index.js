@@ -81,6 +81,7 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
         else {
             var fileChange = data.toString().slice(logFileSize);
             var logInstance = {
+                server: 'main',
                 category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -101,6 +102,7 @@ fs_1.default.watchFile(errorlogFilePath, function (curr, prev) {
         else {
             var fileChange = data.toString().slice(errorlogFileSize);
             var logInstance = {
+                server: 'main',
                 category: 'error',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -121,6 +123,7 @@ fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
         else {
             var fileChange = data.toString().slice(adminlogFileSize);
             var logInstance = {
+                server: 'admin',
                 category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -141,6 +144,7 @@ fs_1.default.watchFile(erroradminlogFilePath, function (curr, prev) {
         else {
             var fileChange = data.toString().slice(erroradminlogFileSize);
             var logInstance = {
+                server: 'admin',
                 category: 'error',
                 value: fileChange,
                 timestamp: curr.mtimeMs

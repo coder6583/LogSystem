@@ -5,6 +5,7 @@ import path from 'path';
 
 interface logObject
 {
+    server: string,
     category: string,
     value: string,
     timestamp: number
@@ -95,6 +96,7 @@ fs.watchFile(logFilePath, (curr, prev) => {
             let fileChange = data.toString().slice(logFileSize);
             const logInstance: logObject = 
             {
+                server: 'main',
                 category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -116,6 +118,7 @@ fs.watchFile(errorlogFilePath, (curr, prev) => {
             let fileChange = data.toString().slice(errorlogFileSize);
             const logInstance: logObject = 
             {
+                server: 'main',
                 category: 'error',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -137,6 +140,7 @@ fs.watchFile(adminlogFilePath, (curr, prev) => {
             let fileChange = data.toString().slice(adminlogFileSize);
             const logInstance: logObject = 
             {
+                server: 'admin',
                 category: 'info',
                 value: fileChange,
                 timestamp: curr.mtimeMs
@@ -158,6 +162,7 @@ fs.watchFile(erroradminlogFilePath, (curr, prev) => {
             let fileChange = data.toString().slice(erroradminlogFileSize);
             const logInstance: logObject = 
             {
+                server: 'admin',
                 category: 'error',
                 value: fileChange,
                 timestamp: curr.mtimeMs
