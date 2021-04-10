@@ -25,7 +25,7 @@ fs_1.default.readFile(logJsonFilePath, function (err, data) {
     else {
         var jsonData = JSON.parse(data.toString());
         if (Array.isArray(jsonData)) {
-            logJson.concat(jsonData);
+            logJson = logJson.concat(jsonData);
         }
         else if (typeof jsonData === 'object' && jsonData != null) {
             logJson.push(jsonData);
@@ -39,7 +39,7 @@ fs_1.default.readFile(adminlogJsonFilePath, function (err, data) {
     else {
         var jsonData = JSON.parse(data.toString());
         if (Array.isArray(jsonData)) {
-            adminlogJson.concat(jsonData);
+            adminlogJson = adminlogJson.concat(jsonData);
         }
         else if (typeof jsonData === 'object' && jsonData != null) {
             adminlogJson.push(jsonData);

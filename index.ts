@@ -33,7 +33,7 @@ fs.readFile(logJsonFilePath, (err, data) => {
         let jsonData = JSON.parse(data.toString());
         if(Array.isArray(jsonData))
         {
-            logJson.concat(jsonData);
+            logJson = logJson.concat(jsonData);
         }
         else if(typeof jsonData === 'object' && jsonData != null)
         {
@@ -50,7 +50,7 @@ fs.readFile(adminlogJsonFilePath, (err, data) => {
         let jsonData = JSON.parse(data.toString());
         if(Array.isArray(jsonData))
         {
-            adminlogJson.concat(jsonData);
+            adminlogJson = adminlogJson.concat(jsonData);
         }
         else if(typeof jsonData === 'object' && jsonData != null)
         {
