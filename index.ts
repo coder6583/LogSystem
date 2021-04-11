@@ -138,6 +138,7 @@ fs.watchFile(adminlogFilePath, (curr, prev) => {
         else
         {
             let fileChange = data.toString().slice(adminlogFileSize);
+            console.log(adminlogFileSize);
             const logInstance: logObject = 
             {
                 server: 'admin',

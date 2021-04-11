@@ -122,6 +122,7 @@ fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
             console.log(err);
         else {
             var fileChange = data.toString().slice(adminlogFileSize);
+            console.log(adminlogFileSize);
             var logInstance = {
                 server: 'admin',
                 category: 'info',
