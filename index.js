@@ -14,6 +14,7 @@ var adminlogFilePath = path_1.default.resolve(discordDir, 'adminlog');
 var erroradminlogFilePath = path_1.default.resolve(discordDir, 'erroradminlog');
 var logJsonFilePath = path_1.default.resolve(homeDir, 'log.json');
 var adminlogJsonFilePath = path_1.default.resolve(homeDir, 'adminlog.json');
+var regexp = /(\w)\((.+)/;
 var logFileSize = 0;
 var errorlogFileSize = 0;
 var adminlogFileSize = 0;
@@ -80,17 +81,23 @@ fs_1.default.watchFile(logFilePath, function (curr, prev) {
             console.log(err);
         else {
             var fileChange = data.toString().slice(logFileSize);
-            var logInstance = {
-                server: 'main',
-                category: 'info',
-                value: fileChange,
-                timestamp: curr.mtimeMs
-            };
-            logJson.push(logInstance);
-            fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
-                if (err)
-                    console.log(err);
-            });
+            var match = fileChange.match(regexp);
+            if (match) {
+                if (match[2].endsWith(')')) {
+                    var logInstance = {
+                        server: 'main',
+                        category: 'info',
+                        value: match[2].substring(0, match.length - 1),
+                        timestamp: curr.mtimeMs,
+                        title: match[1]
+                    };
+                    logJson.push(logInstance);
+                    fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
+                        if (err)
+                            console.log(err);
+                    });
+                }
+            }
             logFileSize = data.toString().length;
         }
     });
@@ -101,17 +108,23 @@ fs_1.default.watchFile(errorlogFilePath, function (curr, prev) {
             console.log(err);
         else {
             var fileChange = data.toString().slice(errorlogFileSize);
-            var logInstance = {
-                server: 'main',
-                category: 'error',
-                value: fileChange,
-                timestamp: curr.mtimeMs
-            };
-            logJson.push(logInstance);
-            fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
-                if (err)
-                    console.log(err);
-            });
+            var match = fileChange.match(regexp);
+            if (match) {
+                if (match[2].endsWith(')')) {
+                    var logInstance = {
+                        server: 'main',
+                        category: 'error',
+                        value: match[2].substring(0, match.length - 1),
+                        timestamp: curr.mtimeMs,
+                        title: match[1]
+                    };
+                    logJson.push(logInstance);
+                    fs_1.default.writeFile(logJsonFilePath, JSON.stringify(logJson), function (err) {
+                        if (err)
+                            console.log(err);
+                    });
+                }
+            }
             errorlogFileSize = data.toString().length;
         }
     });
@@ -122,18 +135,23 @@ fs_1.default.watchFile(adminlogFilePath, function (curr, prev) {
             console.log(err);
         else {
             var fileChange = data.toString().slice(adminlogFileSize);
-            console.log(fileChange, "fileChangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-            var logInstance = {
-                server: 'admin',
-                category: 'info',
-                value: fileChange,
-                timestamp: curr.mtimeMs
-            };
-            adminlogJson.push(logInstance);
-            fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
-                if (err)
-                    console.log(err);
-            });
+            var match = fileChange.match(regexp);
+            if (match) {
+                if (match[2].endsWith(')')) {
+                    var logInstance = {
+                        server: 'admin',
+                        category: 'info',
+                        value: match[2].substring(0, match.length - 1),
+                        timestamp: curr.mtimeMs,
+                        title: match[1]
+                    };
+                    adminlogJson.push(logInstance);
+                    fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
+                        if (err)
+                            console.log(err);
+                    });
+                }
+            }
             adminlogFileSize = data.toString().length;
         }
     });
@@ -144,17 +162,23 @@ fs_1.default.watchFile(erroradminlogFilePath, function (curr, prev) {
             console.log(err);
         else {
             var fileChange = data.toString().slice(erroradminlogFileSize);
-            var logInstance = {
-                server: 'admin',
-                category: 'error',
-                value: fileChange,
-                timestamp: curr.mtimeMs
-            };
-            adminlogJson.push(logInstance);
-            fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
-                if (err)
-                    console.log(err);
-            });
+            var match = fileChange.match(regexp);
+            if (match) {
+                if (match[2].endsWith(')')) {
+                    var logInstance = {
+                        server: 'admin',
+                        category: 'error',
+                        value: match[2].substring(0, match.length - 1),
+                        timestamp: curr.mtimeMs,
+                        title: match[1]
+                    };
+                    adminlogJson.push(logInstance);
+                    fs_1.default.writeFile(adminlogJsonFilePath, JSON.stringify(adminlogJson), function (err) {
+                        if (err)
+                            console.log(err);
+                    });
+                }
+            }
             erroradminlogFileSize = data.toString().length;
         }
     });
