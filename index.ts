@@ -20,7 +20,7 @@ const adminlogFilePath = path.resolve(discordDir, 'adminlog');
 const erroradminlogFilePath = path.resolve(discordDir, 'erroradminlog');
 const logJsonFilePath = path.resolve(homeDir, 'log.json');
 const adminlogJsonFilePath = path.resolve(homeDir, 'adminlog.json');
-const regexp = /(\w)\((.+)/;
+const regexp = /^(\w)\((.+)\)$/;
 
 let logFileSize = 0;
 let errorlogFileSize = 0;
