@@ -49,7 +49,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                             var logInstance = {
                                 server: server,
                                 category: 'info',
-                                value: match[2].substring(0, match[2].length - 1),
+                                value: match[2],
                                 timestamp: time,
                                 title: match[1]
                             };

@@ -53,7 +53,7 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                             {
                                 server: server,
                                 category: 'info',
-                                value: match[2].substring(0, match[2].length - 1),
+                                value: match[2],
                                 timestamp: time,
                                 title: match[1]
                             };
