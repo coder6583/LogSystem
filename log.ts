@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const func = require('./functions.ts');
+const func = require('./functions');
 
 interface logObject
 {
