@@ -40,17 +40,17 @@ adminlogFileSize = func.initFileSize(adminlogFilePath);
 erroradminlogFileSize = func.initFileSize(erroradminlogFilePath);
 
 fs.watchFile(logFilePath, (curr, prev) => {
-    logFileSize = func.updateLog(logFilePath, logJsonFilePath, logFileSize, curr.mtimeMs, logJson);
+    logFileSize = func.updateLog(logFilePath, logJsonFilePath, logFileSize, curr.mtimeMs, logJson, false, 'main');
 });
 
 fs.watchFile(errorlogFilePath, (curr, prev) => {
-    errorlogFileSize = func.updateLog(errorlogFilePath, logJsonFilePath, errorlogFileSize, curr.mtimeMs, logJson);
+    errorlogFileSize = func.updateLog(errorlogFilePath, logJsonFilePath, errorlogFileSize, curr.mtimeMs, logJson, true, 'main');
 });
 
 fs.watchFile(adminlogFilePath, (curr, prev) => {
-    adminlogFileSize = func.updateLog(adminlogFilePath, adminlogJsonFilePath, adminlogFileSize, curr.mtimeMs, adminlogJson);
+    adminlogFileSize = func.updateLog(adminlogFilePath, adminlogJsonFilePath, adminlogFileSize, curr.mtimeMs, adminlogJson, false, 'admin');
 });
 
 fs.watchFile(erroradminlogFilePath, (curr, prev) => {
-    erroradminlogFileSize = func.updateLog(erroradminlogFilePath, adminlogJsonFilePath, erroradminlogFileSize, curr.mtimeMs, adminlogJson);
+    erroradminlogFileSize = func.updateLog(erroradminlogFilePath, adminlogJsonFilePath, erroradminlogFileSize, curr.mtimeMs, adminlogJson, true, 'admin');
 });

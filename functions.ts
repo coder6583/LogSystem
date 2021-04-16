@@ -37,30 +37,48 @@ function initFileSize(path: string) {
     });
     return logFileSize;
 }
-function updateLog(path: string, jsonPath: string, size: number, time: number, logJson: logObject[]) {
+function updateLog(path: string, jsonPath: string, size: number, time: number, logJson: logObject[], isError: boolean, server: string) {
     return new Promise((resolve, reject) => {
         fs.readFile(path, (err, data) => {
             if (err) console.log(err);
             else {
                 let fileChange = data.toString().slice(size);
-                let logs: string[] = fileChange.split('\`');
-                logs.forEach((element: string) => {
-                    let match = element.match(regexp);
-                    if (match) {
-                        const logInstance: logObject =
-                        {
-                            server: 'main',
-                            category: 'info',
-                            value: match[2].substring(0, match.length - 1),
-                            timestamp: time,
-                            title: match[1]
-                        };
-                        logJson.push(logInstance);
-                        fs.writeFile(jsonPath, JSON.stringify(logJson), (err) => {
-                            if (err) console.log(err);
-                        });
-                    }
-                })
+                if(!isError)
+                {
+                    let logs: string[] = fileChange.split('\`');
+                    logs.forEach((element: string) => {
+                        let match = element.match(regexp);
+                        if (match) {
+                            const logInstance: logObject =
+                            {
+                                server: server,
+                                category: 'info',
+                                value: match[2].substring(0, match.length - 1),
+                                timestamp: time,
+                                title: match[1]
+                            };
+                            logJson.push(logInstance);
+                            fs.writeFile(jsonPath, JSON.stringify(logJson), (err) => {
+                                if (err) console.log(err);
+                            });
+                        }
+                    })
+                }
+                else
+                {
+                    const logInstance: logObject =
+                    {
+                        server: server,
+                        category: 'error',
+                        value: fileChange,
+                        timestamp: time,
+                        title: 'error'
+                    };
+                    logJson.push(logInstance);
+                    fs.writeFile(jsonPath, JSON.stringify(logJson), (err) => {
+                        if (err) console.log(err);
+                    });
+                }
             }
             size = data.toString().length;
             resolve(size);
