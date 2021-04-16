@@ -1,13 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs_1 = __importDefault(require("fs"));
+var fs = require('fs');
 var regexp = /^(\w)\((.+)\)$/;
 function initLog(path) {
     var logJson = [];
-    fs_1.default.readFile(path, function (err, data) {
+    fs.readFile(path, function (err, data) {
         if (err)
             console.log(err);
         else {
@@ -24,7 +21,7 @@ function initLog(path) {
 }
 function initFileSize(path) {
     var logFileSize = 0;
-    fs_1.default.readFile(path, function (err, data) {
+    fs.readFile(path, function (err, data) {
         if (err)
             console.log(err);
         else {
@@ -35,7 +32,7 @@ function initFileSize(path) {
 }
 function updateLog(path, jsonPath, size, time, logJson, isError, server) {
     return new Promise(function (resolve, reject) {
-        fs_1.default.readFile(path, function (err, data) {
+        fs.readFile(path, function (err, data) {
             if (err)
                 console.log(err);
             else {
@@ -53,7 +50,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                                 title: match[1]
                             };
                             logJson.push(logInstance);
-                            fs_1.default.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
+                            fs.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
                                 if (err)
                                     console.log(err);
                             });
@@ -69,7 +66,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                         title: 'error'
                     };
                     logJson.push(logInstance);
-                    fs_1.default.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
+                    fs.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
                         if (err)
                             console.log(err);
                     });
