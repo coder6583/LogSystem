@@ -1,5 +1,4 @@
 const fs = require('fs');
-import path from 'path';
 
 const regexp = /^(\w)\((.+)\)$/;
 
