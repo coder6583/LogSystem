@@ -44,6 +44,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                     var logs = fileChange.split('\`');
                     logs.forEach(function (element) {
                         var match = element.match(regexp);
+                        console.log(match);
                         if (match) {
                             var logInstance = {
                                 server: server,
