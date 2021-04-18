@@ -45,6 +45,9 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                     var logs = fileChange.split('\`');
                     logs.forEach(function (element) {
                         console.log(element);
+                        if (element.startsWith("<br>")) {
+                            element = element.slice(4);
+                        }
                         var match = element.match(regexp);
                         console.log(match);
                         if (match) {

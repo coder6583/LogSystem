@@ -48,6 +48,10 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                     let logs: string[] = fileChange.split('\`');
                     logs.forEach((element: string) => {
                         console.log(element);
+                        if(element.startsWith("<br>"))
+                        {
+                            element = element.slice(4);
+                        }
                         let match = element.match(regexp);
                         console.log(match);
                         if (match) {
