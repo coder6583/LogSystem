@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
-var regexp = /^(\w+)\((.*)\)$/;
+var regexp = /^(\w+)\(((\n | .)*)\)$/;
 function initLog(path) {
     var logJson = [];
     fs_1.default.readFile(path, function (err, data) {
@@ -44,9 +44,6 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                     var logs = fileChange.split('\`');
                     logs.forEach(function (element) {
                         console.log(element);
-                        if (element.startsWith("\n")) {
-                            element = element.slice(1);
-                        }
                         var match = element.match(regexp);
                         console.log(match);
                         if (match) {

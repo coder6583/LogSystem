@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const regexp = /^(\w+)\((.*)\)$/;
+const regexp = /^(\w+)\(((\n | .)*)\)$/;
 
 interface logObject {
     server: string,
@@ -47,10 +47,6 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                     let logs: string[] = fileChange.split('\`');
                     logs.forEach((element: string) => {
                         console.log(element);
-                        if(element.startsWith("\n"))
-                        {
-                            element = element.slice(1);
-                        }
                         let match = element.match(regexp);
                         console.log(match);
                         if (match) {
