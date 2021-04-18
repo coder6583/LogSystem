@@ -39,18 +39,18 @@ errorlogFileSize = func.initFileSize(errorlogFilePath);
 adminlogFileSize = func.initFileSize(adminlogFilePath);
 erroradminlogFileSize = func.initFileSize(erroradminlogFilePath);
 
-fs.watchFile(logFilePath, (curr, prev) => {
-    logFileSize = func.updateLog(logFilePath, logJsonFilePath, logFileSize, curr.mtimeMs, logJson, false, 'main');
+fs.watchFile(logFilePath, async (curr, prev) => {
+    logFileSize = await func.updateLog(logFilePath, logJsonFilePath, logFileSize, curr.mtimeMs, logJson, false, 'main');
 });
 
-fs.watchFile(errorlogFilePath, (curr, prev) => {
-    errorlogFileSize = func.updateLog(errorlogFilePath, logJsonFilePath, errorlogFileSize, curr.mtimeMs, logJson, true, 'main');
+fs.watchFile(errorlogFilePath, async (curr, prev) => {
+    errorlogFileSize = await func.updateLog(errorlogFilePath, logJsonFilePath, errorlogFileSize, curr.mtimeMs, logJson, true, 'main');
 });
 
-fs.watchFile(adminlogFilePath, (curr, prev) => {
-    adminlogFileSize = func.updateLog(adminlogFilePath, adminlogJsonFilePath, adminlogFileSize, curr.mtimeMs, adminlogJson, false, 'admin');
+fs.watchFile(adminlogFilePath, async (curr, prev) => {
+    adminlogFileSize = await func.updateLog(adminlogFilePath, adminlogJsonFilePath, adminlogFileSize, curr.mtimeMs, adminlogJson, false, 'admin');
 });
 
-fs.watchFile(erroradminlogFilePath, (curr, prev) => {
-    erroradminlogFileSize = func.updateLog(erroradminlogFilePath, adminlogJsonFilePath, erroradminlogFileSize, curr.mtimeMs, adminlogJson, true, 'admin');
+fs.watchFile(erroradminlogFilePath, async (curr, prev) => {
+    erroradminlogFileSize = await func.updateLog(erroradminlogFilePath, adminlogJsonFilePath, erroradminlogFileSize, curr.mtimeMs, adminlogJson, true, 'admin');
 });
