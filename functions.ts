@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const regexp = /^(\w+)\(((\n | .)*)\)$/;
+const regexp = /^(\w+)\(((\n | .)*)\)$/m;
 
 interface logObject {
     server: string,
