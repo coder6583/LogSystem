@@ -43,7 +43,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                 if (!isError) {
                     var logs = fileChange.split('\`');
                     logs.forEach(function (element) {
-                        console.log(element, element.match(regexp));
+                        console.log(element, regexp);
                         var match = element.match(regexp);
                         console.log(match);
                         if (match) {
