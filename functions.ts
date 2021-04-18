@@ -59,11 +59,11 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                                 title: match[1]
                             };
                             logJson.push(logInstance);
-                            fs.writeFile(jsonPath, JSON.stringify(logJson), (err) => {
-                                if (err) console.log(err);
-                            });
                         }
                     })
+                    fs.writeFile(jsonPath, JSON.stringify(logJson), (err) => {
+                        if (err) console.log(err);
+                    });
                 }
                 else
                 {

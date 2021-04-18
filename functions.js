@@ -55,11 +55,11 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                                 title: match[1]
                             };
                             logJson.push(logInstance);
-                            fs_1.default.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
-                                if (err)
-                                    console.log(err);
-                            });
                         }
+                    });
+                    fs_1.default.writeFile(jsonPath, JSON.stringify(logJson), function (err) {
+                        if (err)
+                            console.log(err);
                     });
                 }
                 else {
