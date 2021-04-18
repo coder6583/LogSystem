@@ -46,7 +46,7 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                 {
                     let logs: string[] = fileChange.split('\`');
                     logs.forEach((element: string) => {
-                        console.log(element);
+                        console.log(element, element.match(regexp));
                         let match = element.match(regexp);
                         console.log(match);
                         if (match) {
