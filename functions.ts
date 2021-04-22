@@ -5,7 +5,7 @@ const regexp = /^(\w+)\((.*)\)$/;
 interface logObject {
     server: string,
     category: string,
-    value: string,
+    value: string[],
     timestamp: number,
     title: string
 }
@@ -47,19 +47,34 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                 {
                     let logs: string[] = fileChange.split('\`');
                     logs.forEach((element: string) => {
-                        console.log(element);
+                        console.log(element, 1);
                         if(element.startsWith("<br>"))
                         {
                             element = element.slice(4);
                         }
                         let match = element.match(regexp);
-                        console.log(match);
+                        console.log(match, 2);
                         if (match) {
+                            let valueArray = [];
+                            if(match[2].length < 8000)
+                            {
+                                valueArray.push(match[2]);
+                            }
+                            else
+                            {
+                                let temp = match[2];
+                                while(temp.length > 8000)
+                                {
+                                    valueArray.push(temp.slice(0, 8000));
+                                    temp = temp.slice(8000);
+                                }
+                                valueArray.push(temp);
+                            }
                             const logInstance: logObject =
                             {
                                 server: server,
                                 category: 'info',
-                                value: match[2],
+                                value: valueArray,
                                 timestamp: time,
                                 title: match[1]
                             };
@@ -72,11 +87,26 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                 }
                 else
                 {
+                    let valueArray = [];
+                    if(fileChange.length < 8000)
+                    {
+                        valueArray.push(fileChange);
+                    }
+                    else
+                    {
+                        let temp = fileChange;
+                        while(temp.length > 8000)
+                        {
+                            valueArray.push(temp.slice(0, 8000));
+                            temp = temp.slice(8000);
+                        }
+                        valueArray.push(temp);
+                    }
                     const logInstance: logObject =
                     {
                         server: server,
                         category: 'error',
-                        value: fileChange,
+                        value: valueArray,
                         timestamp: time,
                         title: 'error'
                     };

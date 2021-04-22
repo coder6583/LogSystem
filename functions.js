@@ -44,17 +44,29 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                 if (!isError) {
                     var logs = fileChange.split('\`');
                     logs.forEach(function (element) {
-                        console.log(element);
+                        console.log(element, 1);
                         if (element.startsWith("<br>")) {
                             element = element.slice(4);
                         }
                         var match = element.match(regexp);
-                        console.log(match);
+                        console.log(match, 2);
                         if (match) {
+                            var valueArray = [];
+                            if (match[2].length < 8000) {
+                                valueArray.push(match[2]);
+                            }
+                            else {
+                                var temp = match[2];
+                                while (temp.length > 8000) {
+                                    valueArray.push(temp.slice(0, 8000));
+                                    temp = temp.slice(8000);
+                                }
+                                valueArray.push(temp);
+                            }
                             var logInstance = {
                                 server: server,
                                 category: 'info',
-                                value: match[2],
+                                value: valueArray,
                                 timestamp: time,
                                 title: match[1]
                             };
@@ -67,10 +79,22 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                     });
                 }
                 else {
+                    var valueArray = [];
+                    if (fileChange.length < 8000) {
+                        valueArray.push(fileChange);
+                    }
+                    else {
+                        var temp = fileChange;
+                        while (temp.length > 8000) {
+                            valueArray.push(temp.slice(0, 8000));
+                            temp = temp.slice(8000);
+                        }
+                        valueArray.push(temp);
+                    }
                     var logInstance = {
                         server: server,
                         category: 'error',
-                        value: fileChange,
+                        value: valueArray,
                         timestamp: time,
                         title: 'error'
                     };
