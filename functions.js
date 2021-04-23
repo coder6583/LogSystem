@@ -53,7 +53,7 @@ function updateLog(path, jsonPath, size, time, logJson, isError, server) {
                         if (match) {
                             var valueArray = [];
                             if (match[3].length < 8000) {
-                                valueArray.push(match[2]);
+                                valueArray.push(match[3]);
                             }
                             else {
                                 var temp = match[3];

@@ -58,7 +58,7 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                             let valueArray = [];
                             if(match[3].length < 8000)
                             {
-                                valueArray.push(match[2]);
+                                valueArray.push(match[3]);
                             }
                             else
                             {
