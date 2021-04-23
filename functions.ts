@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const regexp = /^([\w|\s]+)\((.*)\)$/;
+const regexp = /^(([^\(]|\s)+)\((.*)\)$/;
 
 interface logObject {
     server: string,
@@ -56,13 +56,13 @@ function updateLog(path: string, jsonPath: string, size: number, time: number, l
                         console.log(match, 2);
                         if (match) {
                             let valueArray = [];
-                            if(match[2].length < 8000)
+                            if(match[3].length < 8000)
                             {
                                 valueArray.push(match[2]);
                             }
                             else
                             {
-                                let temp = match[2];
+                                let temp = match[3];
                                 while(temp.length > 8000)
                                 {
                                     valueArray.push(temp.slice(0, 8000));
